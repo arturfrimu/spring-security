@@ -18,9 +18,12 @@ public class DbSeeder {
     @EventListener
     public void savePets() {
         petsRepository.deleteAll();
-        List<Pets> petsList = Arrays.asList(new Pets("Spike", "Dog", "Bulldog"),
+
+        List<Pets> petsList = Arrays.asList(
+                new Pets("Spike", "Dog", "Bulldog"),
                 new Pets("Tom", "Cat", "Regular"),
-                new Pets("Jerry", "Mouse", "special"));
+                new Pets("Jerry", "Mouse", "special")
+        );
 
         petsRepository.saveAll(petsList);
     }
