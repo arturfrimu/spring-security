@@ -3,6 +3,7 @@ package com.gourav.restapi.utils;
 import com.gourav.restapi.models.Pets;
 import com.gourav.restapi.repositories.PetsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,7 @@ public class DbSeeder {
     private final PetsRepository petsRepository;
 
     @EventListener
-    public void savePets() {
+    public void savePets(ContextStartedEvent event) {
         petsRepository.deleteAll();
 
         List<Pets> petsList = Arrays.asList(
