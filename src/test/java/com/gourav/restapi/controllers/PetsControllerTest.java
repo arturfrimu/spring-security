@@ -2,8 +2,7 @@ package com.gourav.restapi.controllers;
 
 import com.gourav.restapi.models.Pets;
 import org.bson.types.ObjectId;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,9 +17,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest(value = PetsController.class)
-public class PetsControllerTest {
+class PetsControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
@@ -29,7 +27,7 @@ public class PetsControllerTest {
 	private PetsController petsController;
 
 	@Test
-	public void getAllPets() throws Exception {
+	void getAllPets() throws Exception {
 		ObjectId id = ObjectId.get();
 		Pets pets = new Pets(id, "Liam", "cat", "tabby");
 
@@ -43,7 +41,7 @@ public class PetsControllerTest {
 	}
 
 	@Test
-	public void getPetById() throws Exception {
+	void getPetById() throws Exception {
 		ObjectId id = ObjectId.get();
 		Pets pets = new Pets(id, "Liam", "cat", "tabby");
 

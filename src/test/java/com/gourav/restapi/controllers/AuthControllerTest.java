@@ -1,7 +1,7 @@
 package com.gourav.restapi.controllers;
 
 import com.gourav.restapi.controllers.payload.request.SignupRequest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
@@ -16,12 +16,12 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import static org.springframework.http.RequestEntity.post;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class AuthControllerTest {
+class AuthControllerTest {
     public AuthControllerTest() {
     }
 
     @Test
-    public void testRegisterUser() {
+    void testRegisterUser() {
         TestRestTemplate testRestTemplate = new TestRestTemplate();
         SignupRequest signUpRequest = new SignupRequest();
         signUpRequest.setUsername("newUser");
