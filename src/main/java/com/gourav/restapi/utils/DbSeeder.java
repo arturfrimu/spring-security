@@ -1,9 +1,12 @@
 package com.gourav.restapi.utils;
 
+import com.gourav.restapi.models.ERole;
 import com.gourav.restapi.models.Pets;
+import com.gourav.restapi.models.Role;
 import com.gourav.restapi.repositories.PetsRepository;
+import com.gourav.restapi.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.event.ContextStartedEvent;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +18,10 @@ import java.util.List;
 public class DbSeeder {
 
     private final PetsRepository petsRepository;
+    private final RoleRepository roleRepository;
 
     @EventListener
-    public void savePets(ContextStartedEvent event) {
+    public void savePets(ContextRefreshedEvent event) {
         petsRepository.deleteAll();
 
         List<Pets> petsList = Arrays.asList(
@@ -27,5 +31,18 @@ public class DbSeeder {
         );
 
         petsRepository.saveAll(petsList);
+    }
+
+    @EventListener
+    public void saveRoles(ContextRefreshedEvent event) {
+        roleRepository.deleteAll();
+
+        List<Role> roles = Arrays.asList(
+                new Role(ERole.ROLE_ADMIN),
+                new Role(ERole.ROLE_USER),
+                new Role(ERole.ROLE_MODERATOR)
+        );
+
+        roleRepository.saveAll(roles);
     }
 }
