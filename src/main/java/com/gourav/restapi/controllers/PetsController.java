@@ -1,8 +1,11 @@
 package com.gourav.restapi.controllers;
 
-import com.gourav.restapi.models.Pets;
-import com.gourav.restapi.repositories.PetsRepository;
-import lombok.*;
+import com.gourav.restapi.exception.PetNotFountException;
+import com.gourav.restapi.models.mongo.Pets;
+import com.gourav.restapi.repositories.mongo.PetsRepository;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +33,9 @@ public class PetsController {
     @GetMapping(value = "/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public PetsResponse getPetById(@PathVariable("id") ObjectId id) {
-        return PetsResponse.from(repository.findById(id));
+        Pets pets = repository.findById(id)
+                .orElseThrow(() -> new PetNotFountException(String.format("Pet not found with id %s", id.toHexString())));
+        return PetsResponse.from(pets);
     }
 
     @PutMapping(value = "/{id}")
@@ -51,7 +56,9 @@ public class PetsController {
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public void deletePet(@PathVariable ObjectId id) {
-        repository.delete(repository.findById(id));
+        Pets pets = repository.findById(id)
+                .orElseThrow(() -> new PetNotFountException(String.format("Pet not found with id %s", id.toHexString())));
+        repository.delete(pets);
     }
 
     @Getter

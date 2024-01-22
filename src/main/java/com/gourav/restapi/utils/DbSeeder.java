@@ -1,10 +1,10 @@
 package com.gourav.restapi.utils;
 
-import com.gourav.restapi.models.ERole;
-import com.gourav.restapi.models.Pets;
-import com.gourav.restapi.models.Role;
-import com.gourav.restapi.repositories.PetsRepository;
-import com.gourav.restapi.repositories.RoleRepository;
+import com.gourav.restapi.models.postgress.ERole;
+import com.gourav.restapi.models.mongo.Pets;
+import com.gourav.restapi.models.postgress.RoleEntity;
+import com.gourav.restapi.repositories.mongo.PetsRepository;
+import com.gourav.restapi.repositories.postgress.JpaRolesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -18,7 +18,7 @@ import java.util.List;
 public class DbSeeder {
 
     private final PetsRepository petsRepository;
-    private final RoleRepository roleRepository;
+    private final JpaRolesRepository jpaRolesRepository;
 
     @EventListener
     public void savePets(ContextRefreshedEvent event) {
@@ -35,14 +35,14 @@ public class DbSeeder {
 
     @EventListener
     public void saveRoles(ContextRefreshedEvent event) {
-        roleRepository.deleteAll();
+        jpaRolesRepository.deleteAll();
 
-        List<Role> roles = Arrays.asList(
-                new Role(ERole.ROLE_ADMIN),
-                new Role(ERole.ROLE_USER),
-                new Role(ERole.ROLE_MODERATOR)
+        List<RoleEntity> roles = Arrays.asList(
+                new RoleEntity(ERole.ROLE_ADMIN),
+                new RoleEntity(ERole.ROLE_USER),
+                new RoleEntity(ERole.ROLE_MODERATOR)
         );
 
-        roleRepository.saveAll(roles);
+        jpaRolesRepository.saveAll(roles);
     }
 }

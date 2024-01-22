@@ -1,4 +1,4 @@
-package com.gourav.restapi.models;
+package com.gourav.restapi.models.mongo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,13 +16,6 @@ public class Pets {
     private String breed;
 
     public Pets() {}
-
-    public Pets(ObjectId id, String name, String species, String breed) {
-      this.id = id;
-      this.name = name;
-      this.species = species;
-      this.breed = breed;
-    }
 
     public Pets(String name, String species, String breed) {
         this.name = name;

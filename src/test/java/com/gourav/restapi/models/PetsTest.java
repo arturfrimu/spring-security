@@ -1,6 +1,7 @@
 package com.gourav.restapi.models;
 
 
+import com.gourav.restapi.models.mongo.Pets;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 
