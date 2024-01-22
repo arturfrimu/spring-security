@@ -1,27 +1,37 @@
 plugins {
-  id "org.sonarqube" version "2.7"
+    id 'java'
+    id 'org.springframework.boot' version '2.7.18'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'jacoco'
+    id 'org.sonarqube' version '2.7'
+    id 'maven-publish'
 }
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'jacoco'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
 
 group = 'com.gourav'
 version = '0.0.1-SNAPSHOT'
 
 description = """restApi"""
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 17
+targetCompatibility = 17
+
 tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
+    options.encoding = 'UTF-8'
 }
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
 
 task copyToLib(type: Copy) {
     into "$buildDir/libs"
-    from(configurations.compile)
+    from(configurations.runtimeClasspath)
 }
 
 stage.dependsOn(copyToLib)
@@ -38,6 +48,8 @@ dependencies {
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.7.18'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
