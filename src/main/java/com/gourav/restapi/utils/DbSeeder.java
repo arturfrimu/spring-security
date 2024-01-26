@@ -27,7 +27,8 @@ public class DbSeeder {
         List<Pets> petsList = Arrays.asList(
                 new Pets("Spike", "Dog", "Bulldog"),
                 new Pets("Tom", "Cat", "Regular"),
-                new Pets("Jerry", "Mouse", "special")
+                new Pets("Jerry", "Mouse", "special"),
+                new Pets("Far", "Tomson", "special")
         );
 
         petsRepository.saveAll(petsList);
